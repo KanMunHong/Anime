@@ -615,8 +615,9 @@
       document.getElementById("modalAnimeDesc").innerText = desc;
       document.getElementById("modalStudio").innerText = studio;
       document.getElementById("modalCharacters").innerText = characters;
-      document.getElementById("modalTrailer").src = "https://www.youtube.com/embed/" + trailerId;
-
+     const embedUrl = "https://www.youtube-nocookie.com/embed/" + trailerId + "?rel=0&modestbranding=1&autoplay=0&enablejsapi=1";
+      document.getElementById("modalTrailer").src = embedUrl;
+      
       document.getElementById("animeModal").style.display = "flex";
     }
 
