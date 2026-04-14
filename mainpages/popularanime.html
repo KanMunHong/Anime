@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Popular Anime</title>
   <style>
     * {
@@ -24,7 +24,6 @@
       line-height: 1.6;
     }
 
-    /*Anime News*/
     header {
       background: linear-gradient(100deg, #120e0c, #f86f13);
       color: rgb(255, 255, 255);
@@ -151,7 +150,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.9);
       justify-content: center;
       align-items: center;
       z-index: 999;
@@ -194,6 +193,10 @@
       font-size: 25px;
       cursor: pointer;
       color: #f86f13;
+    }
+
+    .close-btn:hover {
+      color: #ffaa55;
     }
 
     .anime-title {
@@ -262,7 +265,6 @@
       background: #ff9a3c;
     }
 
-
     .dark-mode {
       background: #ffffff;
       color: #000000;
@@ -275,7 +277,6 @@
     .dark-mode nav {
       background: #eeeeee;
     }
-
 
     .api-section {
       width: 90%;
@@ -309,23 +310,25 @@
       font-style: italic;
     }
 
-    .video-container {
-      position: relative;
+    .youtube-button {
+      display: block;
       width: 100%;
-      max-width: 700px;
-      margin: 20px auto;
-      padding-bottom: 56.25%;
-      /* 16:9 ratio */
-      height: 0;
+      background: #ff0000;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      margin: 20px 0 10px 0;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
     }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
+    
+    .youtube-button:hover {
+      background: #cc0000;
     }
   </style>
 
@@ -546,7 +549,7 @@
   </section>
 
   <section class="api-section">
-    <h2>🔥 Anime Quote & Trailer</h2>
+    <h2>🔥 Anime Quote</h2>
 
     <button id="loadQuote">Get Anime Quote</button>
 
@@ -566,9 +569,7 @@
       <p><strong>Studio:</strong> <span id="modalStudio"></span></p>
       <p><strong>Main Characters:</strong> <span id="modalCharacters"></span></p>
 
-      <div class="video-container">
-        <iframe id="modalTrailer" src="" title="Anime Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-      </div>
+      <a href="#" id="watchTrailerBtn" class="youtube-button" target="_blank">▶ WATCH TRAILER ON YOUTUBE</a>
     </div>
   </div>
 
@@ -596,17 +597,6 @@
       $("#quoteText").text(animeQuotes[randomIndex]);
     });
 
-
-
-    function changeTrailer(videoId, event) {
-
-      event.preventDefault();
-
-      document.getElementById("trailerPlayer").src =
-        "https://www.youtube.com/embed/" + videoId;
-    }
-
-
     function openAnimeModal(name, img, genre, rating, desc, studio, characters, trailerId) {
       document.getElementById("modalAnimeName").innerText = name;
       document.getElementById("modalAnimeImg").src = img;
@@ -615,15 +605,15 @@
       document.getElementById("modalAnimeDesc").innerText = desc;
       document.getElementById("modalStudio").innerText = studio;
       document.getElementById("modalCharacters").innerText = characters;
-      // FIX: Added playsinline=1 parameter for mobile compatibility
-      document.getElementById("modalTrailer").src = "https://www.youtube.com/embed/" + trailerId + "?playsinline=1&rel=0";
-
+      
+      var youtubeUrl = "https://www.youtube.com/watch?v=" + trailerId;
+      document.getElementById("watchTrailerBtn").href = youtubeUrl;
+      
       document.getElementById("animeModal").style.display = "flex";
     }
 
     function closeAnimeModal() {
       document.getElementById("animeModal").style.display = "none";
-      document.getElementById("modalTrailer").src = "";
     }
 
     window.addEventListener("click", function (event) {
@@ -632,7 +622,6 @@
         closeAnimeModal();
       }
     });
-
 
     function searchAnime() {
       let input = document.getElementById("searchInput").value.toLowerCase();
@@ -687,7 +676,7 @@
       updateFavoriteButtons();
     }
 
-    function toggleFavorite(anime, btn) {
+    function toggleFavorite(anime) {
       let favorites = getFavorites();
 
       if (favorites.includes(anime)) {
@@ -717,6 +706,7 @@
 
     function saveLastViewed(anime) {
       localStorage.setItem("lastViewedAnime", anime);
+      displayLastViewed();
     }
 
     function displayLastViewed() {
@@ -746,7 +736,6 @@
     };
 
   </script>
-
 
 </body>
 
