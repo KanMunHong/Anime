@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anime Character | Anime News and Cosplay</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111111;
+      color: #333;
+    }
+
+    /*background of Anime News*/
+    header {
+      background: linear-gradient(100deg, #120e0c, #f86f13);
+      color: rgb(246, 245, 245);
+      padding: 20px;
+      text-align: center;
+    }
+
+    /*anime news*/
+    header h1 {
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+      letter-spacing: 1px;
+    }
+
+    /*Discover*/
+    header p {
+      color: #ffd27f;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    /*background of small panel*/
+    nav {
+      background: #242424;
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: rgb(241, 125, 42);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ffd700;
+    }
+
+    .banner {
+      text-align: center;
+      padding: 40px 20px;
+      background: url(images/background.jpg);
+      color: white;
+    }
+
+    .banner h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: rgba(83, 81, 81, 0.5);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+
+    .banner p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      background: rgba(83, 81, 81, 0.5);
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .character-section {
+      width: 90%;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .character-card {
+      background: rgb(237, 91, 37);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .character-card:hover {
+      transform: scale(1.03);
+    }
+
+    .character-card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+
+    .character-info {
+      padding: 20px;
+    }
+
+    .character-info h2 {
+      color: #222222;
+      margin-bottom: 10px;
+    }
+
+    .character-info p {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 8px;
+      background: #ffebf0;
+      color: #c2185b;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #1a1a1a;
+      color: white;
+      max-width: 500px;
+      width: 90%;
+      padding: 25px;
+      border-radius: 15px;
+      border: 2px solid #f86f13;
+      box-shadow: 0 0 25px rgba(248, 111, 19, 0.4);
+      text-align: left;
+    }
+
+
+    .modal-box img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+
+    .modal-box h2 {
+      color: #f86f13;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px rgba(248, 111, 19, 0.5);
+    }
+
+
+    #modalAnime {
+      display: inline-block;
+      background: linear-gradient(45deg, #ff7a18, #ffb347);
+      color: black;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+
+    #modalDesc {
+      color: #ddd;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+
+    #modalAbilities span {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 10px;
+      margin: 4px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+
+
+    #modalTags span {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffd27f;
+      padding: 5px 10px;
+      margin: 4px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+
+    .modal-box strong {
+      color: #ffd27f;
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 25px;
+      cursor: pointer;
+      color: #f86f13;
+    }
+
+
+    footer {
+      background: #1f1f1f;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    .dark-mode {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .dark-mode header {
+      background: linear-gradient(100deg, #f86f13, #ffe0c4);
+    }
+
+    .dark-mode nav {
+      background: #eeeeee;
+    }
+
+    .theme-btn {
+      background: linear-gradient(45deg, #ff7a18, #ffb347);
+      color: rgb(12, 12, 12);
+      border: none;
+      padding: 6px 12px;
+      margin-left: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .theme-btn:hover {
+      background: #ff9a3c;
+    }
+
+    .api-section {
+      width: 90%;
+      margin: 40px auto;
+      text-align: center;
+      color: #ffd27f;
+    }
+
+    .api-section h2 {
+      color: #f86f13;
+      margin-bottom: 15px;
+    }
+
+    #loadQuote {
+      background: #f86f13;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #loadQuote:hover {
+      background: #ff9a3c;
+    }
+
+    #quoteText {
+      margin: 15px;
+      font-style: italic;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <h1>Anime News and Cosplay</h1>
+    <p>Your hub for trending anime updates and character highlights</p>
+  </header>
+
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="animenews.html">Anime News</a>
+    <a href="popularanime.html">Popular Anime</a>
+    <a href="cosplay.html">Cosplay Gallery</a>
+    <a href="animecharacter.html">Anime Character</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="contactus.html">Contact Us</a>
+
+    <button class="theme-btn" onclick="toggleDarkMode()">Dark Mode</button>
+  </nav>
+
+  <section class="banner">
+    <h1>Famous Anime Characters</h1>
+    <p>Meet some of the most loved characters in anime history</p>
+  </section>
+
+  <section class="character-section">
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Naruto Uzumaki',
+  'Naruto',
+  'images/naruto-uzumaki-poster-5k-2048x2048-19824.jpg',
+  'Naruto Uzumaki is a determined ninja from the Hidden Leaf Village who dreams of becoming Hokage. Although he was isolated when he was younger, he never gave up and continued training hard. Over time, he became stronger, gained the respect of others, and proved himself as a brave protector of his friends and village.',
+  'Brave, Optimistic',
+  'Shadow Clone Jutsu, Rasengan, Sage Mode',
+  'Hokage, Jinchuriki, Team 7'
+)">
+      <img src="images/naruto-uzumaki-poster-5k-2048x2048-19824.jpg" alt="Naruto Uzumaki">
+      <div class="character-info">
+        <h2>Naruto Uzumaki</h2>
+        <p><strong>Anime:</strong> Naruto</p>
+        <p><strong>Description:</strong> Naruto is a determined ninja from the Hidden Leaf Village who dreams of
+          becoming Hokage.</p>
+        <span class="tag">Brave</span>
+        <span class="tag">Optimistic</span>
+      </div>
+    </div>
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Monkey D. Luffy',
+  'One Piece',
+  'images/luffy.avif',
+  'Monkey D. Luffy is the cheerful captain of the Straw Hat Pirates in One Piece. After eating the Gum-Gum Fruit, his body gained rubber-like abilities. He travels across the seas with his crew in search of the legendary treasure, One Piece, while chasing his dream of becoming the King of the Pirates.',
+  'Adventurous, Free-spirited',
+  'Gum-Gum Fruit powers, Haki, Gear transformations',
+  'Captain of the Straw Hat Pirates'
+)">
+      <img src="images/luffy.avif" alt="Monkey D. Luffy">
+      <div class="character-info">
+        <h2>Monkey D. Luffy</h2>
+        <p><strong>Anime:</strong> One Piece</p>
+        <p><strong>Description:</strong> Luffy is the cheerful captain of the Straw Hat Pirates who dreams of becoming
+          the King of the Pirates.</p>
+        <span class="tag">Adventurous</span>
+        <span class="tag">Free-spirited</span>
+      </div>
+    </div>
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Gojo Satoru',
+  'Jujutsu Kaisen',
+  'images/gojo.avif',
+  'Gojo Satoru is one of the strongest sorcerers in Jujutsu Kaisen and a teacher at Tokyo Jujutsu High. He is known for his overwhelming power, confidence, and playful personality. Despite his relaxed attitude, he is deeply committed to protecting people from curses and training a stronger new generation of sorcerers.',
+  'Powerful, Confident',
+  'Limitless, Six Eyes, Domain Expansion',
+  'Teacher at Tokyo Jujutsu High'
+)">
+      <img src="images/gojo.avif" alt="Gojo Satoru">
+      <div class="character-info">
+        <h2>Gojo Satoru</h2>
+        <p><strong>Anime:</strong> Jujutsu Kaisen</p>
+        <p><strong>Description:</strong> Gojo is one of the strongest sorcerers, known for his great power and confident
+          personality.</p>
+        <span class="tag">Powerful</span>
+        <span class="tag">Confident</span>
+      </div>
+    </div>
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Tanjiro Kamado',
+  'Demon Slayer',
+  'images/tanjiro.webp',
+  'Tanjiro Kamado is a kind and determined demon slayer in Demon Slayer. After his family is killed by demons, he joins the Demon Slayer Corps to protect others and search for a cure to turn his sister Nezuko back into a human. His compassion, discipline, and strong sense of responsibility make him a respected fighter.',
+  'Kind-hearted, Compassionate',
+  'Water Breathing, Sun Breathing, enhanced smell',
+  'Demon Slayer Corps member'
+)">
+      <img src="images/tanjiro.webp" alt="Tanjiro Kamado">
+      <div class="character-info">
+        <h2>Tanjiro Kamado</h2>
+        <p><strong>Anime:</strong> Demon Slayer</p>
+        <p><strong>Description:</strong> Tanjiro is a kind demon slayer who fights to protect others and save his
+          sister.</p>
+        <span class="tag">Kind-hearted</span>
+        <span class="tag">Compassionate</span>
+      </div>
+    </div>
+
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Levi Ackerman',
+  'Attack on Titan',
+  'images/levi.jpeg',
+  'Levi Ackerman is humanity’s strongest soldier in Attack on Titan. As a leading member of the Survey Corps, he is respected for his exceptional combat skills, discipline, and calm personality. Even though he often appears cold, Levi deeply cares about his comrades and takes his responsibilities seriously.',
+  'Cool, Disciplined',
+  'ODM gear mastery, sword combat, leadership',
+  'Captain in the Survey Corps'
+)">
+      <img src="images/levi.jpeg" alt="Levi Ackerman">
+      <div class="character-info">
+        <h2>Levi Ackerman</h2>
+        <p><strong>Anime:</strong> Attack on Titan</p>
+        <p><strong>Description:</strong> Levi is humanity’s strongest soldier, admired for his combat skill and
+          discipline.</p>
+        <span class="tag">Cool</span>
+        <span class="tag">Disciplined</span>
+      </div>
+    </div>
+
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Anya Forger',
+  'Spy x Family',
+  'images/anya.webp',
+  'Anya Forger is a cute and funny child in Spy x Family. She secretly has telepathic powers, which means she can read minds. Although she is still young, she often tries her best to help her fake family succeed in their mission, creating many funny and heartwarming moments.',
+  'Cute, Telepath',
+  'Mind reading, quick reactions, emotional awareness',
+  'Member of the Forger family'
+)">
+      <img src="images/anya.webp" alt="Anya Forger">
+      <div class="character-info">
+        <h2>Anya Forger</h2>
+        <p><strong>Anime:</strong> Spy x Family</p>
+        <p><strong>Description:</strong> Anya is a funny and lovable child with telepathic powers.</p>
+        <span class="tag">Cute</span>
+        <span class="tag">Telepath</span>
+      </div>
+    </div>
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Sung Jin-Woo',
+  'Solo Leveling',
+  'images/Song.webp',
+  'Sung Jin-Woo is the main character of Solo Leveling. He begins as the weakest hunter, often struggling to survive dangerous missions. After gaining the unique ability to level up like a game character, he grows stronger and becomes one of the most powerful hunters, earning respect through his intelligence and determination.',
+  'Smart, Responsible',
+  'Shadow extraction, rapid leveling, enhanced combat',
+  'Hunter and Shadow Monarch'
+)">
+      <img src="images/Song.webp" alt="Sung Jin Woo">
+      <div class="character-info">
+        <h2>Sung Jin-Woo</h2>
+        <p><strong>Anime:</strong> Solo Leveling</p>
+        <p><strong>Description:</strong> Sung Jin-Woo rises from the weakest hunter to one of the strongest.</p>
+        <span class="tag">Smart</span>
+        <span class="tag">Responsible</span>
+      </div>
+    </div>
+
+
+    <div class="character-card" onclick="openCharacterModal(
+  'Doraemon',
+  'Doraemon',
+  'images/Doraemon.jpg',
+  'Doraemon is a kind and helpful robot cat from the future. He is sent back in time to help Nobita improve his life and make better choices. Using his many futuristic gadgets, Doraemon solves problems, teaches valuable lessons, and creates many fun adventures along the way.',
+  'Friendly, Helpful',
+  'Future gadgets, problem-solving, time travel tools',
+  'Robot cat from the future'
+)">
+      <img src="images/Doraemon.jpg" alt="Doraemon">
+      <div class="character-info">
+        <h2>Doraemon</h2>
+        <p><strong>Anime:</strong> Doraemon</p>
+        <p><strong>Description:</strong> Doraemon is a helpful robot cat from the future who supports Nobita with
+          amazing gadgets.</p>
+        <span class="tag">Friendly</span>
+        <span class="tag">Robot Cat</span>
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <section class="api-section">
+    <h2>🔥 Character Quotes</h2>
+
+    <button id="loadQuote">🎌 Get Character Quote</button>
+
+    <p id="quoteText">Click the button to see a quote...</p>
+  </section>
+
+
+
+  <div id="characterModal" class="modal">
+    <div class="modal-box">
+      <span class="close-btn" onclick="closeCharacterModal()">&times;</span>
+
+      <img id="modalImg" src="">
+      <h2 id="modalName"></h2>
+      <p><strong>Anime:</strong> <span id="modalAnime"></span></p>
+      <p><strong>Description:</strong> <span id="modalDesc"></span></p>
+      <p><strong>Abilities:</strong> <span id="modalAbilities"></span></p>
+      <p><strong>Role:</strong> <span id="modalRole"></span></p>
+      <p><strong>Tags:</strong> <span id="modalTags"></span></p>
+    </div>
+  </div>
+
+
+
+  <footer>
+    <p>&copy;  ©2026 AnimeClub | Created for UCCD2323 Assignment</p>
+  </footer>
+
+
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+
+      if (document.body.classList.contains("dark-mode")) {
+        document.cookie = "theme=light; path=/";
+      } else {
+        document.cookie = "theme=dark; path=/";
+      }
+    }
+
+
+    function openCharacterModal(name, anime, img, desc, tags, abilities, role) {
+      document.getElementById("modalName").innerText = name;
+      document.getElementById("modalAnime").innerText = anime;
+      document.getElementById("modalImg").src = img;
+      document.getElementById("modalDesc").innerText = desc;
+      document.getElementById("modalTags").innerText = tags;
+      document.getElementById("modalAbilities").innerText = abilities;
+      document.getElementById("modalRole").innerText = role;
+
+      document.getElementById("characterModal").style.display = "flex";
+    }
+
+    function closeCharacterModal() {
+      document.getElementById("characterModal").style.display = "none";
+    }
+    window.onclick = function (event) {
+      const modal = document.getElementById("characterModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    const characterQuotes = [
+      "I never go back on my word. That’s my ninja way! — Naruto",
+      "If you don’t take risks, you can’t create a future. — Luffy",
+      "Throughout heaven and earth, I alone am the honored one. — Gojo",
+      "No matter how hard it is, I will protect those I care about. — Tanjiro",
+      "The only thing we’re allowed to do is believe that we won’t regret the choice we made. — Levi",
+      "Heh. I know what people are thinking. — Anya",
+      "I will rise from the weakest to the strongest. — Sung Jin-Woo",
+      "Don’t worry! I’ll help you! — Doraemon"
+    ];
+
+    $("#loadQuote").click(function () {
+      const randomIndex = Math.floor(Math.random() * characterQuotes.length);
+      $("#quoteText").text(characterQuotes[randomIndex]);
+    });
+
+
+    window.onload = function () {
+      if (document.cookie.includes("theme=light")) {
+        document.body.classList.add("dark-mode");
+      }
+    }
+  </script>
+
+</body>
+
+</html>

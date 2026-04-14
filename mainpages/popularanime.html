@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Popular Anime | Anime News and Cosplay</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    .anime-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    body {
+      background: #111111;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /*Anime News*/
+    header {
+      background: linear-gradient(100deg, #120e0c, #f86f13);
+      color: rgb(255, 255, 255);
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+      letter-spacing: 1px;
+    }
+
+    header p {
+      color: #ffd27f;
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    nav {
+      background: #222;
+      padding: 12px;
+      text-align: center;
+    }
+
+    nav a {
+      color: rgb(229, 102, 6);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ffd700;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background: url(images/Background.jpeg) no-repeat center center/cover;
+      color: rgb(239, 238, 238);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+
+    .hero p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      background: rgba(0, 0, 0, 0.5);
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 2rem;
+      color: #cbab5a;
+    }
+
+    .anime-container {
+      width: 90%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+      justify-content: center;
+      gap: 20px;
+      padding-bottom: 40px;
+    }
+
+    .anime-card {
+      width: 100%;
+      max-width: 300px;
+      background: rgb(15, 15, 14);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgb(248, 102, 5);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .anime-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .anime-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .anime-card .content {
+      color: #56dec7;
+      padding: 18px;
+    }
+
+    .anime-card h3 {
+      margin-bottom: 10px;
+      color: #2575fc;
+    }
+
+    .anime-card p {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .rating {
+      color: #ff9800;
+      font-weight: bold;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #1a1a1a;
+      color: white;
+      max-width: 600px;
+      width: 90%;
+      padding: 25px;
+      border-radius: 15px;
+      border: 2px solid #f86f13;
+      box-shadow: 0 0 25px rgba(248, 111, 19, 0.4);
+      text-align: left;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-box img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .modal-box h2 {
+      color: #f86f13;
+      margin-bottom: 10px;
+    }
+
+    .modal-box strong {
+      color: #ffd27f;
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 25px;
+      cursor: pointer;
+      color: #f86f13;
+    }
+
+    .anime-title {
+      color: #2575fc;
+      cursor: pointer;
+    }
+
+    .anime-title:hover {
+      color: #ff9800;
+      text-decoration: underline;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .search-box {
+      text-align: center;
+      margin: 30px;
+    }
+
+    .search-box input {
+      width: 60%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 25px;
+      border: 1px solid #bd6a29;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: #2575fc;
+    }
+
+    .favorite-display {
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 12px;
+      background: #1b1b1b;
+      border: 2px solid #f86f13;
+      border-radius: 10px;
+      text-align: center;
+      color: #ffd27f;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(248, 111, 19, 0.6);
+    }
+
+    .btn {
+      margin-top: 8px;
+      padding: 6px 12px;
+      background: #f86f13;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #ff9a3c;
+    }
+
+
+    .dark-mode {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .dark-mode header {
+      background: linear-gradient(100deg, #f86f13, #ffe0c4);
+    }
+
+    .dark-mode nav {
+      background: #eeeeee;
+    }
+
+
+    .api-section {
+      width: 90%;
+      margin: 40px auto;
+      text-align: center;
+      color: #ffd27f;
+    }
+
+    .api-section h2 {
+      color: #f86f13;
+      margin-bottom: 15px;
+    }
+
+    #loadQuote {
+      background: #f86f13;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    #loadQuote:hover {
+      background: #ff9a3c;
+    }
+
+    #quoteText {
+      margin: 15px;
+      font-style: italic;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 700px;
+      margin: 20px auto;
+      padding-bottom: 56.25%;
+      /* 16:9 ratio */
+      height: 0;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+  <header>
+    <h1>Anime News and Cosplay</h1>
+    <p>Your hub for trending anime updates and character highlights</p>
+  </header>
+
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="animenews.html">Anime News</a>
+    <a href="popularanime.html">Popular Anime</a>
+    <a href="cosplay.html">Cosplay Gallery</a>
+    <a href="animecharacter.html">Anime Character</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="contactus.html">Contact Us</a>
+
+    <button class="btn" onclick="toggleDarkMode()">Dark Mode</button>
+  </nav>
+
+  <section class="hero">
+    <h1>Popular Anime in 2026</h1>
+    <p>Explore the hottest anime series loved by fans around the world</p>
+  </section>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Search anime..." onkeyup="searchAnime()">
+  </div>
+
+  <div class="favorite-display">
+    ⭐ Favorite Anime: <span id="favorite">None</span><br>
+    👀 Last Viewed: <span id="lastViewed">None</span>
+  </div>
+
+  <h2 class="section-title">Top Trending Anime</h2>
+
+  <section class="anime-container">
+    <div class="anime-card">
+      <img src="images/demon slayer.jpg" alt="Demon Slayer">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'Demon Slayer',
+  'images/demon slayer.jpg',
+  'Action, Fantasy',
+  '9.2/10',
+  'Demon Slayer follows Tanjiro Kamado as he joins the Demon Slayer Corps after demons kill his family. He fights to protect others and find a way to turn his sister Nezuko back into a human.',
+  'Ufotable',
+  'Tanjiro Kamado, Nezuko Kamado, Zenitsu Agatsuma, Inosuke Hashibira',
+  'VQGCKyvzIM4'
+); saveLastViewed('Demon Slayer')">Demon Slayer</h3>
+        <p>A popular action anime following Tanjiro Kamado as he fights demons and protects his sister Nezuko.</p>
+        <p class="rating">Rating: 9.2/10</p>
+        <button class="btn" data-anime="Demon Slayer" onclick="toggleFavorite('Demon Slayer')">⭐
+          Favorite</button>
+      </div>
+    </div>
+
+
+    <div class="anime-card">
+      <img src="images/jujutsu s3.webp" alt="Jujutsu Kaisen">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'Jujutsu Kaisen',
+  'images/jujutsu s3.webp',
+  'Action, Supernatural, Fantasy',
+  '9.0/10',
+  'Jujutsu Kaisen follows Yuji Itadori as he enters the world of curses after swallowing a cursed object. He joins Jujutsu High and fights dangerous enemies alongside powerful sorcerers.',
+  'MAPPA',
+  'Yuji Itadori, Megumi Fushiguro, Nobara Kugisaki, Satoru Gojo',
+  'MPfZhgLiK6w'
+); saveLastViewed('Jujutsu Kaisen')">Jujutsu Kaisen</h3>
+        <p>A supernatural anime about Yuji Itadori and his journey into the dangerous world of curses and sorcery.</p>
+        <p class="rating">Rating: 9.0/10</p>
+        <button class="btn" data-anime="Jujutsu Kaisen" onclick="toggleFavorite('Jujutsu Kaisen')">⭐
+          Favorite</button>
+      </div>
+    </div>
+
+
+
+    <div class="anime-card">
+      <img src="images/AOT.avif" alt="Attack on Titan">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'Attack on Titan',
+  'images/AOT.avif',
+  'Action, Dark Fantasy, Drama',
+  '9.5/10',
+  'Attack on Titan tells the story of humanity fighting for survival against gigantic Titans. As the truth about the world is revealed, the series explores war, freedom, sacrifice, and revenge.',
+  'Wit Studio / MAPPA',
+  'Eren Yeager, Mikasa Ackerman, Armin Arlert, Levi Ackerman',
+  'LV-nazLVmgo'
+); saveLastViewed('Attack on Titan')">Attack on Titan</h3>
+        <p>A thrilling anime about humanity's battle for survival against giant man-eating Titans.</p>
+        <p class="rating">Rating: 9.5/10</p>
+        <button class="btn" data-anime="Attack on Titan" onclick="toggleFavorite('Attack on Titan')">⭐
+          Favorite</button>
+      </div>
+    </div>
+
+
+
+    <div class="anime-card">
+      <img src="images/One_Piece,_Volume_61_Cover_(Japanese).jpg" alt="One Piece">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'One Piece',
+  'images/One_Piece,_Volume_61_Cover_(Japanese).jpg',
+  'Adventure, Action, Fantasy',
+  '9.4/10',
+  'One Piece follows Monkey D. Luffy and his pirate crew as they travel across the Grand Line in search of the legendary treasure known as One Piece, while chasing freedom and adventure.',
+  'Toei Animation',
+  'Monkey D. Luffy, Zoro, Nami, Sanji, Usopp',
+  'MCb13lbVGE0'
+); saveLastViewed('One Piece')">One Piece</h3>
+        <p>Follow Monkey D. Luffy and his pirate crew as they search for the legendary treasure, One Piece.</p>
+        <p class="rating">Rating: 9.4/10</p>
+        <button class="btn" data-anime="One Piece" onclick="toggleFavorite('One Piece')">⭐ Favorite</button>
+      </div>
+    </div>
+
+
+
+    <div class="anime-card">
+      <img src="images/Spy.avif" alt="Spy x Family">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'Spy x Family',
+  'images/Spy.avif',
+  'Comedy, Action, Family',
+  '8.8/10',
+  'Spy x Family follows a spy, an assassin, and a telepath who pretend to be a perfect family. Their secret identities create funny and heartwarming moments while they try to complete their missions.',
+  'Wit Studio / CloverWorks',
+  'Loid Forger, Yor Forger, Anya Forger, Bond',
+  'JP6vBnazpWI'
+); saveLastViewed('Spy x Family')">Spy x Family</h3>
+        <p>A comedy-action anime about a spy, an assassin, and a telepath pretending to be a perfect family.</p>
+        <p class="rating">Rating: 8.8/10</p>
+        <button class="btn" data-anime="Spy x Family" onclick="toggleFavorite('Spy x Family')">⭐
+          Favorite</button>
+      </div>
+    </div>
+
+
+
+    <div class="anime-card">
+      <img src="images/myHeroAcademia.jpg" alt="My Hero Academia">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'My Hero Academia',
+  'images/myHeroAcademia.jpg',
+  'Superhero, Action, School',
+  '8.7/10',
+  'My Hero Academia follows Izuku Midoriya, a boy born without powers in a world filled with heroes. After inheriting a powerful ability, he enters U.A. High School to pursue his dream of becoming the greatest hero.',
+  'Bones',
+  'Izuku Midoriya, Katsuki Bakugo, Shoto Todoroki, All Might',
+  'FwE87GX3dEc'
+); saveLastViewed('My Hero Academia')">My Hero Academia</h3>
+        <p>A superhero anime featuring Izuku Midoriya and his dream of becoming the greatest hero.</p>
+        <p class="rating">Rating: 8.7/10</p>
+        <button class="btn" data-anime="My Hero Academia" onclick="toggleFavorite('My Hero Academia')">⭐
+          Favorite</button>
+      </div>
+    </div>
+
+
+
+    <div class="anime-card">
+      <img src="images/Sololeveling.jpg" alt="Solo-Leveling">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'Solo Leveling',
+  'images/Sololeveling.jpg',
+  'Action, Fantasy, Adventure',
+  '9.2/10',
+  'Solo Leveling follows Sung Jin-Woo, the weakest hunter, who gains the unique ability to level up like a game character. He becomes stronger and rises to face increasingly powerful enemies.',
+  'A-1 Pictures',
+  'Sung Jin-Woo, Cha Hae-In, Yoo Jin-Ho, Go Gun-Hee',
+  'I6JIwjWOhnQ'
+); saveLastViewed('Solo-Leveling')">Solo-Leveling</h3>
+        <p>Solo Leveling is an action-fantasy anime where Hunters enter monster-filled dungeons through mysterious
+          gates to protect humanity.</p>
+        <p class="rating">Rating: 9.2/10</p>
+        <button class="btn" data-anime="Solo-Leveling" onclick="toggleFavorite('Solo-Leveling')">⭐
+          Favorite</button>
+      </div>
+    </div>
+
+
+
+    <div class="anime-card">
+      <img src="images/DPoster.jpeg" alt="Doraemon">
+      <div class="content">
+        <h3 class="anime-title" onclick="openAnimeModal(
+  'Doraemon',
+  'images/DPoster.jpeg',
+  'Comedy, Sci-Fi, Family',
+  '8.7/10',
+  'Doraemon is a classic Japanese anime about a robot cat from the future who helps Nobita using futuristic gadgets. The story mixes humor, friendship, and life lessons in fun adventures.',
+  'Shin-Ei Animation',
+  'Doraemon, Nobita Nobi, Shizuka Minamoto, Gian, Suneo',
+  'tSTNG-cLByk'
+); saveLastViewed('Doraemon')">Doraemon</h3>
+        <p>A classic Japanese anime about Doraemon, a robot cat from the future who helps Nobita with futuristic
+          gadgets, leading to many fun and meaningful adventures.</p>
+        <p class="rating">Rating: 8.7/10</p>
+        <button class="btn" data-anime="Doraemon" onclick="toggleFavorite('Doraemon')">⭐ Favorite</button>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="api-section">
+    <h2>🔥 Anime Quote & Trailer</h2>
+
+    <button id="loadQuote">Get Anime Quote</button>
+
+    <p id="quoteText">Click the button to load a quote...</p>
+
+  </section>
+
+  <div id="animeModal" class="modal">
+    <div class="modal-box">
+      <span class="close-btn" onclick="closeAnimeModal()">&times;</span>
+
+      <img id="modalAnimeImg" src="" alt="Anime Image">
+      <h2 id="modalAnimeName"></h2>
+      <p><strong>Genre:</strong> <span id="modalGenre"></span></p>
+      <p><strong>Rating:</strong> <span id="modalRating"></span></p>
+      <p><strong>Description:</strong> <span id="modalAnimeDesc"></span></p>
+      <p><strong>Studio:</strong> <span id="modalStudio"></span></p>
+      <p><strong>Main Characters:</strong> <span id="modalCharacters"></span></p>
+
+      <div class="video-container">
+        <iframe id="modalTrailer" src="" title="Anime Trailer" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; ©2026 AnimeClub | Created for UCCD2323 Assignment</p>
+  </footer>
+
+  <script>
+
+    const animeQuotes = [
+      "Set your heart ablaze. — Kyojuro Rengoku (Demon Slayer)",
+      "If you don’t take risks, you can’t create a future. — Monkey D. Luffy (One Piece)",
+      "The only thing we’re allowed to do is believe that we won’t regret the choice we made. — Levi Ackerman (Attack on Titan)",
+      "No matter what happens, keep moving forward. — Eren Yeager (Attack on Titan)",
+      "A hero always finds a way for justice to be served. — Izuku Midoriya (My Hero Academia)",
+      "Even the weakest hunter can become the strongest. — Sung Jin-Woo (Solo Leveling)",
+      "A lie is a lie, but sometimes it’s needed to protect others. — Loid Forger (Spy x Family)",
+      "No matter how difficult it is, the future is something you build yourself. — Doraemon",
+      "Power comes from understanding yourself. — Satoru Gojo (Jujutsu Kaisen)"
+    ];
+
+
+    $("#loadQuote").click(function () {
+      const randomIndex = Math.floor(Math.random() * animeQuotes.length);
+      $("#quoteText").text(animeQuotes[randomIndex]);
+    });
+
+
+
+    function changeTrailer(videoId, event) {
+
+      event.preventDefault();
+
+      document.getElementById("trailerPlayer").src =
+        "https://www.youtube.com/embed/" + videoId;
+    }
+
+
+    function openAnimeModal(name, img, genre, rating, desc, studio, characters, trailerId) {
+      document.getElementById("modalAnimeName").innerText = name;
+      document.getElementById("modalAnimeImg").src = img;
+      document.getElementById("modalGenre").innerText = genre;
+      document.getElementById("modalRating").innerText = rating;
+      document.getElementById("modalAnimeDesc").innerText = desc;
+      document.getElementById("modalStudio").innerText = studio;
+      document.getElementById("modalCharacters").innerText = characters;
+      document.getElementById("modalTrailer").src = "https://www.youtube.com/embed/" + trailerId;
+
+      document.getElementById("animeModal").style.display = "flex";
+    }
+
+    function closeAnimeModal() {
+      document.getElementById("animeModal").style.display = "none";
+      document.getElementById("modalTrailer").src = "";
+    }
+
+    window.addEventListener("click", function (event) {
+      const modal = document.getElementById("animeModal");
+      if (event.target === modal) {
+        closeAnimeModal();
+      }
+    });
+
+
+    function searchAnime() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+
+      sessionStorage.setItem("lastSearch", input);
+
+      let cards = document.getElementsByClassName("anime-card");
+
+      for (let i = 0; i < cards.length; i++) {
+        let title = cards[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+
+        if (title.includes(input)) {
+          cards[i].style.display = "";
+        } else {
+          cards[i].style.display = "none";
+        }
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+
+      if (document.body.classList.contains("dark-mode")) {
+        document.cookie = "theme=light; path=/";
+      } else {
+        document.cookie = "theme=dark; path=/";
+      }
+    }
+
+    function getFavorites() {
+      let cookie = document.cookie.split(";").find(c => c.trim().startsWith("favoriteAnime="));
+
+      if (!cookie) return [];
+
+      let value = cookie.split("=")[1];
+      return value ? decodeURIComponent(value).split("|") : [];
+    }
+
+    function saveFavorites(list) {
+      document.cookie = "favoriteAnime=" + encodeURIComponent(list.join("|")) + "; path=/";
+    }
+
+    function displayFavorites() {
+      let favList = getFavorites();
+
+      if (favList.length === 0) {
+        document.getElementById("favorite").innerText = "None";
+      } else {
+        document.getElementById("favorite").innerText = favList.join(", ");
+      }
+
+      updateFavoriteButtons();
+    }
+
+    function toggleFavorite(anime, btn) {
+      let favorites = getFavorites();
+
+      if (favorites.includes(anime)) {
+        favorites = favorites.filter(a => a !== anime);
+      } else {
+        favorites.push(anime);
+      }
+
+      saveFavorites(favorites);
+      displayFavorites();
+    }
+
+    function updateFavoriteButtons() {
+      let favorites = getFavorites();
+      let buttons = document.querySelectorAll(".btn[data-anime]");
+
+      buttons.forEach(function (btn) {
+        let anime = btn.getAttribute("data-anime");
+
+        if (favorites.includes(anime)) {
+          btn.innerText = "❌ Unfavorite";
+        } else {
+          btn.innerText = "⭐ Favorite";
+        }
+      });
+    }
+
+    function saveLastViewed(anime) {
+      localStorage.setItem("lastViewedAnime", anime);
+    }
+
+    function displayLastViewed() {
+      let lastViewed = localStorage.getItem("lastViewedAnime");
+
+      if (lastViewed) {
+        document.getElementById("lastViewed").innerText = lastViewed;
+      } else {
+        document.getElementById("lastViewed").innerText = "None";
+      }
+    }
+
+    window.onload = function () {
+      let lastSearch = sessionStorage.getItem("lastSearch");
+
+      if (lastSearch) {
+        document.getElementById("searchInput").value = lastSearch;
+        searchAnime();
+      }
+
+      if (document.cookie.includes("theme=light")) {
+        document.body.classList.add("dark-mode");
+      }
+
+      displayFavorites();
+      displayLastViewed();
+    };
+
+  </script>
+
+
+</body>
+
+</html>
