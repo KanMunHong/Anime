@@ -567,7 +567,7 @@
       <p><strong>Main Characters:</strong> <span id="modalCharacters"></span></p>
 
       <div class="video-container">
-        <iframe id="modalTrailer" src="" title="Anime Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe id="modalTrailer" src="" title="Anime Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -606,7 +606,7 @@
         "https://www.youtube.com/embed/" + videoId;
     }
 
-    // ========== FIXED: YouTube video embed with proper URL format ==========
+
     function openAnimeModal(name, img, genre, rating, desc, studio, characters, trailerId) {
       document.getElementById("modalAnimeName").innerText = name;
       document.getElementById("modalAnimeImg").src = img;
@@ -615,23 +615,15 @@
       document.getElementById("modalAnimeDesc").innerText = desc;
       document.getElementById("modalStudio").innerText = studio;
       document.getElementById("modalCharacters").innerText = characters;
-      
-      // FIX: Use youtube-nocookie.com with proper parameters for reliable playback
-      // The previous code was correct but adding allow/features ensures video works
-      const embedUrl = "https://www.youtube-nocookie.com/embed/" + trailerId + "?rel=0&modestbranding=1&autoplay=0&enablejsapi=1";
-      document.getElementById("modalTrailer").src = embedUrl;
-      
+      // FIX: Added playsinline=1 parameter for mobile compatibility
+      document.getElementById("modalTrailer").src = "https://www.youtube.com/embed/" + trailerId + "?playsinline=1&rel=0";
+
       document.getElementById("animeModal").style.display = "flex";
     }
-    // ========== END OF FIX ==========
 
     function closeAnimeModal() {
-      const modalIframe = document.getElementById("modalTrailer");
-      // Stop video playback when modal closes
-      if (modalIframe) {
-        modalIframe.src = "";
-      }
       document.getElementById("animeModal").style.display = "none";
+      document.getElementById("modalTrailer").src = "";
     }
 
     window.addEventListener("click", function (event) {
@@ -725,8 +717,6 @@
 
     function saveLastViewed(anime) {
       localStorage.setItem("lastViewedAnime", anime);
-      // Immediately update the display
-      displayLastViewed();
     }
 
     function displayLastViewed() {
