@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>AnimeClub</title>
+    <title>AnimeVerse</title>
     <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap"
@@ -460,7 +460,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <h1>AnimeClub</h1>
+                <h1>AnimeVerse</h1>
             </div>
             <ul class="nav-links">
                 <li><a href="#"> Home</a></li>
@@ -474,7 +474,7 @@
         <div class="container">
             <!-- INTRODUCTION SECTION  -->
             <div id="intro-main" class="intro-section">
-                <h2>Welcome to AnimeClub </h2>
+                <h2>Welcome to AnimeVerse </h2>
                 <p><strong>Your ultimate anime destination</strong> — a hub where passion meets creativity. Dive into
                     the vibrant world of Japanese animation, manga culture, and the otaku lifestyle. This homepage
                     serves as your gateway to all things anime.</p>
@@ -494,7 +494,7 @@
                 <a href="aboutus.html" class="link-card" data-page="about">
                     <div class="icon-circle"><i class="fas fa-users"></i></div>
                     <h3>About Us</h3>
-                    <p>Learn our story, mission, and the passionate team behind AnimeClub.</p>
+                    <p>Learn our story, mission, and the passionate team behind AnimeVerse.</p>
                     <span class="arrow-hint">Visit Page →</span>
                 </a>
 
@@ -556,7 +556,7 @@
     </main>
 
     <footer>
-        <p>  ©2026 AnimeClub | Created for UCCD2323 Assignment
+        <p>  ©2026 AnimeVerse | Created for UCCD2323 Assignment
             </p>
        
     </footer>
@@ -565,7 +565,7 @@
     <div id="cookieNotice" class="cookie-notice" style="display: none;">
         <span>
             <i class="fas fa-cookie-bite"></i> 
-            🍪 AnimeClub uses localStorage to remember your preferences and enhance your experience. 
+            🍪 AnimeVerse uses localStorage to remember your preferences and enhance your experience. 
             We store your username, visit count, and last visit date.
         </span>
         <div class="cookie-buttons">
@@ -659,7 +659,7 @@
                 // Ask for username - value cannot be null or empty
                 let userName = "";
                 while (userName === null || userName.trim() === "") {
-                    userName = prompt("✨ Welcome to AnimeClub! ✨\n\nWhat should we call you, Otaku?\n(Username cannot be empty)", "Anime Fan");
+                    userName = prompt("✨ Welcome to AnimeVerse! ✨\n\nWhat should we call you, Otaku?\n(Username cannot be empty)", "Anime Fan");
                     if (userName === null) {
                         userName = "Anime Fan";
                         break;
@@ -668,10 +668,10 @@
                 if (userName && userName.trim() !== "") {
                     setStorage("username", userName.trim());
                     username = userName.trim();
-                    welcomeBanner.innerHTML = "<i class='fas fa-crown'></i> 🎉 Welcome, " + username + "! This is your FIRST visit to AnimeClub. Enjoy your journey! <i class='fas fa-heart'></i>";
+                    welcomeBanner.innerHTML = "<i class='fas fa-crown'></i> 🎉 Welcome, " + username + "! This is your FIRST visit to AnimeVerse. Enjoy your journey! <i class='fas fa-heart'></i>";
                 } else {
                     setStorage("username", "Anime Fan");
-                    welcomeBanner.innerHTML = "<i class='fas fa-crown'></i> 🎉 Welcome to AnimeClub! This is your FIRST visit. Enjoy exploring anime culture! <i class='fas fa-star'></i>";
+                    welcomeBanner.innerHTML = "<i class='fas fa-crown'></i> 🎉 Welcome to AnimeVerse! This is your FIRST visit. Enjoy exploring anime culture! <i class='fas fa-star'></i>";
                 }
                 welcomeBanner.style.display = "block";
                 
@@ -689,7 +689,7 @@
                 else if (count <= 20) countEmoji = "⭐";
                 else countEmoji = "🏆";
                 
-                welcomeBanner.innerHTML = "<i class='fas fa-smile-wink'></i> Welcome back, <strong>" + displayName + "</strong>! " + countEmoji + " This is your <strong style='color:#FFD700;'>#" + count + "</strong> visit to AnimeClub.<br><small><i class='far fa-clock'></i> Last visit: " + lastVisitDate + "</small>";
+                welcomeBanner.innerHTML = "<i class='fas fa-smile-wink'></i> Welcome back, <strong>" + displayName + "</strong>! " + countEmoji + " This is your <strong style='color:#FFD700;'>#" + count + "</strong> visit to AnimeVerse.<br><small><i class='far fa-clock'></i> Last visit: " + lastVisitDate + "</small>";
                 welcomeBanner.style.display = "block";
                 
                 setStorage("lastVisit", currentDate);
@@ -800,7 +800,7 @@
         });
         
         // Console log for debugging
-        console.log("=== AnimeClub Homepage Loaded ===");
+        console.log("=== AnimeVerse Homepage Loaded ===");
         console.log("localStorage available: " + storageAvailable());
         console.log("Storage consent: " + getStorage("storageConsent"));
         console.log("Visit count: " + getStorage("visitCount"));
