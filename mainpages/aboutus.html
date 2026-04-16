@@ -109,5 +109,24 @@
 
 </div>
 
+<script>
+const teamCards = document.querySelectorAll('.card'); 
+
+teamCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'scale(1.1)';
+        card.style.transition = '0.3s ease';
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'scale(1)';
+    });
+
+    card.addEventListener('click', () => {
+        alert("You clicked on a legendary team member!");
+    });
+});
+</script>
+
 </body>
 </html>
